@@ -23,7 +23,7 @@ import cxx.tests.NatJTest;
 import org.junit.Test;
 
 @CxxHeader("binding/Functions.hpp")
-public class ExceptionTests {
+public class ExceptionTests extends NatJTest {
 
     @CxxHeader("inheritance/Exceptions.hpp")
     @CxxClass("natj::cxx::tests::inheritance::Exceptions")

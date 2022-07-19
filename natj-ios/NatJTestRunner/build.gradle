@@ -69,7 +69,7 @@ moe {
 dependencies {
     // Compile with 'jar' files in the project's 'lib' directory
     compile fileTree(dir: 'lib', include: '*.jar')
-    testCompile files('../../natj-cxxtests/build/classes/processedCxxTest')
+    testCompile files('../../natj-cxxtests/build/classes/java/processedCxxTest')
 }
 
 // Setup Eclipse

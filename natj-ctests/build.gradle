@@ -48,7 +48,7 @@ task ansibleTestWinPrepare(type: Tar) {
 
     archiveName = "win-test.tar"
     into('classes') {
-        from 'build/classes/test'
+        from 'build/classes/java/test'
     }
     from 'win-test/build.gradle'
     from 'win-test/run.ps1'

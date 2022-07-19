@@ -45,7 +45,7 @@ echo "$TARGET_PLATFORM: Preparing test resources on host..."
 cd ../../
 ./gradlew natj-ctests:compileTest
 cd $WORKSPACE
-[ -d ../build/classes/test ]
+[ -d ../build/classes/java/test ]
 
 export FAIL_MESSAGE="Failed to create build directory!"
 ssh $REMOTE "mkdir -p $BUILD_DIR"
@@ -64,7 +64,7 @@ scp -q ../../gradlew              $REMOTE:$BUILD_DIR/
 scp -q ../../build/libs/natj.jar  $REMOTE:$BUILD_DIR/
 scp -q -r ../src/test/native/*    $REMOTE:$BUILD_DIR/src/
 scp -q -r ../src/test/resources/* $REMOTE:$BUILD_DIR/src/test/resources/
-scp -q -r ../build/classes/test/* $REMOTE:$BUILD_DIR/classes/
+scp -q -r ../build/classes/java/test/* $REMOTE:$BUILD_DIR/classes/
 
 export FAIL_MESSAGE="Failed to copy libnatj.so!"
 scp -q $NATJ_SO $REMOTE:$BUILD_DIR/lib/

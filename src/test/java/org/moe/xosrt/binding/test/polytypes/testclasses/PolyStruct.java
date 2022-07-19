@@ -25,7 +25,9 @@ import org.moe.natj.general.NatJ;
 import org.moe.natj.general.Pointer;
 import org.moe.natj.general.ann.ByValue;
 import org.moe.natj.general.ann.Generated;
+import org.moe.natj.general.ann.Library;
 
+@Library("TestClasses")
 @Structure
 public class PolyStruct extends StructObject {
 	private static long __natjCache; //Used by NatJ for optimizations

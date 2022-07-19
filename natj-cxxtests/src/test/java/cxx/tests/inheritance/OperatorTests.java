@@ -16,13 +16,14 @@ limitations under the License.
 
 package cxx.tests.inheritance;
 
+import cxx.tests.NatJTest;
 import org.moe.natj.cxx.*;
 import org.moe.natj.cxx.ann.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class OperatorTests {
+public class OperatorTests extends NatJTest {
     @CxxHeader("inheritance/Operators.hpp")
     @CxxClass("natj::cxx::tests::inheritance::Operators")
     private interface Operators extends CxxObject {

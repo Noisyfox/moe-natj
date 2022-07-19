@@ -33,19 +33,20 @@ dependencies {
 task processCxxTests(type: JavaExec) {
     dependsOn(sourceSets.test.output)
 
-    classpath = files("../natj-processor/build/libs/natj-processor-${version}.jar", 'build/classes/test',
-            '../build/classes/main', 'dyntype/build/classes/main')
+    classpath = files("../natj-processor/build/libs/natj-processor-${version}.jar", 'build/classes/java/test',
+            '../build/classes/java/main', 'dyntype/build/classes/java/main')
     main 'org.moe.natj.processor.Main'
 
-    args '-i', 'build/classes/test'
-    args '-o', 'build/classes/processedCxxTest'
+    args '-i', 'build/classes/java/test'
+    args '-o', 'build/classes/java/processedCxxTest'
     args '-m', 'c++'
     args '-gen_cxx_source', 'build/native-gen/natj_cxx_stub.cpp'
     args '-gen_cxx_header', 'build/native-gen/natj_cxx_stub.hpp'
     args '-dyn_type_resolvers', 'cxx.tests.TestTypeResolver'
 
-    inputs.files('build/classes/test')
-    outputs.files('build/classes/processedCxxTest', 'build/native-gen/natj_cxx_stub.cpp', 'build/native-gen/natj_cxx_stub.hpp')
+    inputs.files('build/classes/java/test')
+    outputs.dirs('build/classes/java/processedCxxTest')
+    outputs.files('build/native-gen/natj_cxx_stub.cpp', 'build/native-gen/natj_cxx_stub.hpp')
 
     def logfile = file("build/processor.log")
     mkdir logfile.parentFile
@@ -66,11 +67,12 @@ tasks.withType(Test) {
     dependsOn ":natj-mac:build_TestClassesCxx_${nativeConfiguration}_macosx"
 
     doFirst {
-        sourceSets.test.output.classesDir = 'build/classes/processedCxxTest'
+        sourceSets.test.output.classesDirs = files('build/classes/java/processedCxxTest')
     }
 
     systemProperty 'java.library.path', file("../natj-mac/build/xcode/${nativeConfiguration}")
-    testClassesDirs = processCxxTests.outputs.files
+    testClassesDirs = files('build/classes/java/processedCxxTest')
+    print(classpath.files)
     testLogging.showStandardStreams = true
     if (rootProject.hasProperty("moe.use.addresssanitizer")) {
         environment['DYLD_INSERT_LIBRARIES'] = '/Applications/Xcode.app/Contents/Developer/Toolchains/' +
@@ -86,7 +88,7 @@ task ansibleTestWinPrepare(type: Tar) {
 
     archiveName = "win-test.tar"
     into('classes') {
-        from 'build/classes/processedCxxTest'
+        from 'build/classes/java/processedCxxTest'
     }
     from 'win-test/build.gradle'
     from 'win-test/run.ps1'
